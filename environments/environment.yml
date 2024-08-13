@@ -1,0 +1,11 @@
+name: common-file-ops
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - python=3.10
+  - numpy=1.24.2
+  - pandas=2.0.0
+  - pip
+  - pip:
+    - git+https://github.com/provlab-bioinfo/search-tools
