@@ -1,0 +1,6 @@
+
+pip==24.0
+numpy==1.24.2
+pandas==2.0.0
+setuptools==70.3.0
+search_tools @ git+https://github.com/provlab-bioinfo/search-tools@45ec033e98aee896d8c1a2efbf0de204220c486a
