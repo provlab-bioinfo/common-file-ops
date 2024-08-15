@@ -1,6 +1,7 @@
 import pandas as pd
 import search_tools as st
 import numpy as np
+import json
 
 def readTabular(path: str, fields: list[str], ids: dict):
 
@@ -31,3 +32,22 @@ def readTabular(path: str, fields: list[str], ids: dict):
 
         # Return just the fields and ids
         return data[np.unique(list(ids.keys()) + fields)]
+
+def readXML(path: str, fields: list[str], ids: dict):
+    blah = 1
+
+def readJSON(path: str, fields: list[str], ids: dict = None): 
+    data = json.load(open(path))
+    if not isinstance(fields, list): fields = [fields]
+    
+    def recurseDict(data, fields):
+        if isinstance(fields, str):
+            return data[fields]
+        else:
+            key = list(fields.keys())[0]
+            return recurseDict(data[key], fields[key])
+
+    out = [recurseDict(data, field) for field in fields]
+    if (len(out) == 1): out = out[0]
+
+    return out
