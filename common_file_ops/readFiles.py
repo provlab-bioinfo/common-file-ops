@@ -2,6 +2,8 @@ import pandas as pd
 import search_tools as st
 import numpy as np
 import json
+import xml.etree.ElementTree as ET 
+import xmltodict
 
 def readTabular(path: str, fields: list[str], ids: dict):
 
@@ -33,11 +35,16 @@ def readTabular(path: str, fields: list[str], ids: dict):
         # Return just the fields and ids
         return data[np.unique(list(ids.keys()) + fields)]
 
-def readXML(path: str, fields: list[str], ids: dict):
-    blah = 1
-
 def readJSON(path: str, fields: list[str], ids: dict = None): 
     data = json.load(open(path))
+    return readDerivedDict(data, fields, ids)
+
+def readXML(path: str, fields: list[str], ids: dict = None): 
+    with open(path, 'r', encoding='utf-8') as file:
+        data = xmltodict.parse(file.read())
+    return readDerivedDict(data, fields, ids)
+
+def readDerivedDict(data, fields: list[str], ids: dict = None):
     if not isinstance(fields, list): fields = [fields]
     
     def recurseDict(data, fields):
@@ -51,3 +58,5 @@ def readJSON(path: str, fields: list[str], ids: dict = None):
     if (len(out) == 1): out = out[0]
 
     return out
+
+
